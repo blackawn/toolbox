@@ -1,0 +1,18 @@
+@import './base.css';
+
+@layer base {
+  html,
+  body {
+    @apply text-neutral-700 dark:text-neutral-500;
+  }
+}
+
+@layer utilities {
+  .app-darg {
+    app-region: drag;
+  }
+
+  .no-app-darg {
+    app-region: no-drag;
+  }
+}
