@@ -40,10 +40,13 @@ export const PersonalizeProvider: React.FC<AntdThemeProviderProps> = ({
       : children
 
   useEffect(() => {
+
+    const themeConfig = getThemeConfig(theme, color)
+
     setAntdTheme({
-      ...getThemeConfig(theme, color),
+      ...themeConfig,
       token: {
-        ...getThemeConfig(theme, color).token,
+        ...themeConfig.token,
         colorPrimary: color
       }
     })
@@ -56,8 +59,6 @@ export const PersonalizeProvider: React.FC<AntdThemeProviderProps> = ({
   )
 }
 
-export default PersonalizeProvider
-
 export const useAntdTheme = () => {
   const context = useContext(AntdThemeContext)
 
@@ -66,3 +67,5 @@ export const useAntdTheme = () => {
 
   return context
 }
+
+export default PersonalizeProvider

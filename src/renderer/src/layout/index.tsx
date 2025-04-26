@@ -5,15 +5,16 @@ import Main from './Main'
 
 const Layout: React.FC<any> = () => {
   return (
-    <div className='app-darg h-screen overflow-hidden bg-neutral-100 dark:bg-neutral-800 flex'
-    style={{
-      backgroundImage: `url(${texture})`
-    }}
+    <div
+      className="app-darg flex h-screen overflow-hidden bg-neutral-100 dark:bg-neutral-800"
+      style={{
+        backgroundImage: `url(${texture})`
+      }}
     >
-      <Aside/>
-      <div className='flex-1 flex flex-col'>
-        <Header/>
-        <Main/>
+      <Aside />
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <Header />
+        <Main />
       </div>
     </div>
   )

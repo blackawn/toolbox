@@ -1,13 +1,13 @@
-import { app, shell, BrowserWindow, ipcMain, WebContentsView } from 'electron'
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { useTray } from './helper/tray'
+import { createTray } from './helper/tray'
+import { ipcMainHandle } from './ipcMain'
 
 let mainWindow: BrowserWindow | null = null
-let wcw: WebContentsView | null = null
 
-function createWindow(): void {
+function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
     height: 760,
@@ -16,9 +16,8 @@ function createWindow(): void {
     frame: false,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
-      sandbox: false,
-      webviewTag: true
+      preload: join(__dirname, '../preload/index.mjs'),
+      sandbox: false
     }
   })
 
@@ -31,22 +30,18 @@ function createWindow(): void {
     mainWindow?.hide()
   })
 
-  // 监听窗口尺寸变化后
   mainWindow.on('resized', () => {
     mainWindow?.webContents.send('window-resized')
   })
 
-  // 监听窗口最小尺寸变化
   mainWindow.on('minimize', () => {
     mainWindow?.webContents.send('window-resized')
   })
 
-  // 监听窗口最大尺寸变化
   mainWindow.on('maximize', () => {
     mainWindow?.webContents.send('window-resized')
   })
 
-  // 监听窗口最大尺寸还原变化
   mainWindow.on('unmaximize', () => {
     mainWindow?.webContents.send('window-resized')
   })
@@ -65,15 +60,62 @@ function createWindow(): void {
   }
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
-  // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron')
+function ipcMainOn() {
+  ipcMain.on('window-minimize', () => {
+    mainWindow?.minimize()
+  })
 
-  // 创建托盘
-  const tray = useTray({
+  ipcMain.on('window-maximize', () => {
+    if (mainWindow?.isMaximized()) {
+      mainWindow.restore()
+    } else {
+      mainWindow?.maximize()
+    }
+  })
+
+  ipcMain.on('window-close', () => {
+    mainWindow?.hide()
+  })
+
+  ipcMain.on('close-all-child-window', () => {
+    mainWindow?.getChildWindows().forEach((win) => {
+      win.destroy()
+    })
+  })
+
+  ipcMain.on('open-url', (_, options) => {
+    if (!mainWindow) return
+
+    // Create new BrowserWindow
+    const childWindow = new BrowserWindow({
+      width: 700,
+      height: 600,
+      autoHideMenuBar: true,
+      parent: mainWindow
+    })
+
+    // Loading URL
+    childWindow.loadURL(options.url)
+
+    // Complete request
+    childWindow.webContents.session.webRequest.onCompleted((details) => {
+      if (details.url.includes('m3u8')) {
+        const { url, id, method, resourceType, timestamp, statusCode } = details
+        mainWindow?.webContents.send('get-video-request-details', {
+          url,
+          id,
+          method,
+          resourceType,
+          timestamp,
+          statusCode
+        })
+      }
+    })
+  })
+}
+
+function initTray() {
+  const tray = createTray({
     buildFromTemplate: [
       {
         label: '退出',
@@ -89,6 +131,14 @@ app.whenReady().then(() => {
   tray.on('click', () => {
     mainWindow?.show()
   })
+}
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.whenReady().then(() => {
+  // Set app user model id for windows
+  electronApp.setAppUserModelId('com.electron')
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
@@ -97,95 +147,19 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
-
-  ipcMain.on('window-minimize', () => {
-    mainWindow?.minimize()
-  })
-
-  ipcMain.on('window-maximize', () => {
-    mainWindow?.isMaximized() ? mainWindow?.restore() : mainWindow?.maximize()
-  })
-
-  ipcMain.on('window-close', () => {
-    mainWindow?.hide()
-  })
-
-  // 监听创建WebContentsView
-  ipcMain.on('create-web-contents-view', (_, options) => {
-    if (mainWindow) {
-      if (wcw) {
-        mainWindow.contentView.removeChildView(wcw)
-        wcw = null
-      }
-
-      // 创建新的WebContentsView
-      wcw = new WebContentsView({
-        webPreferences: {
-          webviewTag: true,
-        }
-      })
-
-      mainWindow.contentView.addChildView(wcw)
-
-      // 设置位置和大小
-      wcw.setBounds({
-        x: options.x,
-        y: options.y,
-        width: options.width,
-        height: options.height
-      })
-
-      wcw.setBorderRadius(10)
-
-      wcw.setBackgroundColor('#00000000')
-
-      wcw.webContents.loadURL(options.url)
-      //wcw.webContents.openDevTools()
-
-      // 在webContents中打开新的页面窗口时
-      wcw.webContents.setWindowOpenHandler(({ url }) => {
-        wcw?.webContents.loadURL(url)
-        return { action: 'deny' }
-      })
-
-      // 监听所有资源请求
-      wcw.webContents.session.webRequest.onCompleted((details) => {
-        if (details.url.includes('m3u8')) {
-          console.log(details)
-        }
-      })
-
-    }
-  })
-
-  // 监听更新WebContentsView的位置和大小
-  ipcMain.on('update-web-contents-view', (_, options) => {
-    if (wcw) {
-      wcw.setBounds({
-        x: options.x,
-        y: options.y,
-        width: options.width,
-        height: options.height
-      })
-    }
-  })
-
-  ipcMain.on('destroy-web-contents-view', () => {
-    if (mainWindow && wcw) {
-      mainWindow.contentView.removeChildView(wcw)
-      wcw = null
-    }
-  })
-
-  createWindow()
-
-  app.on('activate', function () {
+  app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+
+  initTray()
+
+  ipcMainHandle()
+
+  ipcMainOn()
+
+  createWindow()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

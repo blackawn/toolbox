@@ -28,13 +28,11 @@ const actions = [
 const WindowAction: React.FC<any> = () => {
   return (
     <div className="no-app-darg">
-
-        {actions.map(({ id, onClick, icon }) => (
-          <Button  key={id} onClick={onClick} type="text" className='!rounded-none'>
-            {icon}
-          </Button>
-        ))}
-
+      {actions.map(({ id, onClick, icon }) => (
+        <Button key={id} onClick={onClick} type="text" className="!rounded-none">
+          {icon}
+        </Button>
+      ))}
     </div>
   )
 }

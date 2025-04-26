@@ -1,12 +1,9 @@
-import {
-  PhArrowCircleDown,
-  PhGear,
-} from '@renderer/components/icon'
+import { PhArrowCircleDown, PhGear } from '@renderer/components/icon'
 import { useNavigate } from 'react-router-dom'
-import { Button } from 'antd'
 import ColorPalette from './ColorPalette'
 import ChangeTheme from './ChangeTheme'
 import { ComButton } from '@renderer/components/com'
+import { Badge } from 'antd'
 
 const AppAction: React.FC<any> = () => {
   const navigate = useNavigate()
@@ -27,9 +24,21 @@ const AppAction: React.FC<any> = () => {
 
       <ChangeTheme />
       <ColorPalette />
-      <Button type="text" size="large" shape="circle" onClick={() => navigate('download')}>
-        <PhArrowCircleDown className="size-5" />
-      </Button>
+
+      <Badge count={5} offset={[-4,6]}>
+        <ComButton
+          type="text"
+          size="large"
+          shape="circle"
+          tooltip={{
+            title: '下载',
+            placement: 'top'
+          }}
+          onClick={() => navigate('download')}
+        >
+          <PhArrowCircleDown className="size-5" />
+        </ComButton>
+      </Badge>
     </div>
   )
 }

@@ -15,4 +15,50 @@
   .no-app-darg {
     app-region: no-drag;
   }
+
+  .main-scrollbar::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  .main-scrollbar::-webkit-scrollbar-track {
+    @apply rounded-md bg-transparent;
+  }
+
+  .main-scrollbar::-webkit-scrollbar-thumb {
+    @apply cursor-pointer rounded-md bg-neutral-200;
+  }
+
+  .main-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-300;
+  }
+
+  .dark .main-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-neutral-700;
+  }
+
+  .dark .main-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-600;
+  }
+
+}
+
+@layer antd {
+  .tabs-download .ant-tabs-extra-content{
+    @apply self-start
+  }
+}
+
+
+@layer xgplayer {
+  .thumbnail-player .xgplayer-start {
+    @apply !size-11;
+  }
+
+  .xgplayer .xgplayer-spot{
+    @apply duration-300
+  }
+
+ .xgplayer .xgplayer-spot:hover{
+    @apply !bg-white
+  }
 }

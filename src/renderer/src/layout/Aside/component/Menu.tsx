@@ -6,9 +6,6 @@ import { Menu as AntdMenu } from 'antd'
 const Menu: React.FC<any> = () => {
   const navigate = useNavigate()
 
-  console.log(123123);
-
-
   const menuItems = useMemo(() => {
     return menuData.map(({ path, handle }) => {
       return {

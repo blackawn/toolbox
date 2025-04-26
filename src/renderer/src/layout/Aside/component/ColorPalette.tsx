@@ -1,6 +1,6 @@
 import { ComButton } from '@renderer/components/com'
 import { usePersonalize } from '@renderer/components/PersonalizeProvider'
-import { Button, MenuProps, Popover } from 'antd'
+import { Button, Popover } from 'antd'
 import { useMemo, useState } from 'react'
 import { PhPalette, PhCheck } from '@renderer/components/icon'
 import { parseOklchToHexa } from '@renderer/lib/oklchToHexa'
@@ -45,14 +45,26 @@ const ColorItem = () => {
 }
 
 export const ColorPalette = () => {
-  const [tooltipDisplay, setTooltipDisplay] = useState<boolean>(false)
-
-  const tooltipTitle = useMemo(() => {
-    return tooltipDisplay ? null : '颜色'
-  }, [tooltipDisplay])
+  const [tooltipOpen, setTooltipOpen] = useState<boolean>(false)
+  const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
 
   const handleOpenChange = (open: boolean) => {
-    setTooltipDisplay(open)
+    setTooltipOpen(false)
+    setPopoverOpen(open)
+  }
+
+  const onButtonMouseEnter = () => {
+    if (!popoverOpen) {
+      setTimeout(() => {
+        setTooltipOpen(true)
+      }, 100)
+    }
+  }
+
+  const onButtonMouseLeave = () => {
+    setTimeout(() => {
+      setTooltipOpen(false)
+    }, 100)
   }
 
   return (
@@ -66,11 +78,14 @@ export const ColorPalette = () => {
       <ComButton
         type="text"
         tooltip={{
-          title: tooltipTitle,
-          placement: 'top'
+          title: '颜色',
+          placement: 'top',
+          open: tooltipOpen
         }}
         size="large"
         shape="circle"
+        onMouseEnter={onButtonMouseEnter}
+        onMouseLeave={onButtonMouseLeave}
       >
         <PhPalette className="size-5" />
       </ComButton>

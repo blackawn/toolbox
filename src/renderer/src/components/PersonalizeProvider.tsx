@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useState } from 'react'
 
-
 export type Theme = 'dark' | 'light' | 'system'
 
 interface PersonalizeContextProps {
@@ -54,7 +53,7 @@ export const PersonalizeProvider: React.FC<PersonalizeProviderProps> = ({
     color,
     setTheme,
     isDark,
-    setColor,
+    setColor
   }
 
   const renderChildren = typeof children === 'function' ? children(value) : children

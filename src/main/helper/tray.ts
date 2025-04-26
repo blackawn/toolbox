@@ -1,11 +1,12 @@
-import { Menu, type MenuItem, type MenuItemConstructorOptions, nativeImage, Tray } from 'electron'
+import { Menu, Tray } from 'electron'
+import type { MenuItem, MenuItemConstructorOptions } from 'electron'
+import icon from '../../../resources/icon.png?asset'
 
 interface UseTrayOptions {
   buildFromTemplate?: Array<MenuItemConstructorOptions | MenuItem>
 }
 
-export const useTray = (options?: UseTrayOptions) => {
-  const icon = nativeImage.createFromPath(`resources/icon.png`)
+export const createTray = (options?: UseTrayOptions) => {
   const tray = new Tray(icon)
 
   if (options?.buildFromTemplate) {

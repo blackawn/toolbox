@@ -1,17 +1,26 @@
-import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-dom'
+import { createHashRouter, Navigate, type RouteObject } from 'react-router-dom'
 import RouterGuard from './RouterGuard'
 import { PhVideo } from '@renderer/components/icon'
 import Signin from '@renderer/views/Signin'
 import VideoUrl from '@renderer/views/VideoUrl'
+import VideoConverter from '@renderer/views/VideoConverter'
 import Download from '@renderer/views/Download'
 
 const menuList = [
   {
-    path: 'live-data',
+    path: 'video-url',
     element: <VideoUrl />,
     handle: {
       label: '获取视频地址',
-      icon: <PhVideo className='size-6'/>
+      icon: <PhVideo className="size-6" />
+    }
+  },
+  {
+    path: 'video-converter',
+    element: <VideoConverter />,
+    handle: {
+      label: '视频转换',
+      icon: <PhVideo className="size-6" />
     }
   },
   {
@@ -36,5 +45,5 @@ const config: RouteObject[] = [
   }
 ]
 
-export const routerConfig = createBrowserRouter(config)
-export const menuData = menuList.filter((item)=> item.handle).map(({ element, ...item }) => item)
+export const routerConfig = createHashRouter(config)
+export const menuData = menuList.filter((item) => item.handle).map(({ element, ...item }) => item)

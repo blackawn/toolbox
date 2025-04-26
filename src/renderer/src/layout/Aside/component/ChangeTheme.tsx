@@ -2,7 +2,7 @@ import { ComButton } from '@renderer/components/com'
 import { PhMoonStars, PhSunDim, PhDesktop } from '@renderer/components/icon'
 import { usePersonalize } from '@renderer/components/PersonalizeProvider'
 import { Dropdown, DropdownProps, MenuProps } from 'antd'
-import { cloneElement, JSX, useEffect, useMemo, useState } from 'react'
+import { cloneElement, JSX, useState } from 'react'
 
 const themeItems = [
   {
@@ -25,11 +25,8 @@ const themeItems = [
 export const ChangeTheme = () => {
   const { theme, setTheme } = usePersonalize()
 
-  const [tooltipDisplay, setTooltipDisplay] = useState<boolean>(false)
-
-  const tooltipTitle = useMemo(() => {
-    return tooltipDisplay ? null : '主题'
-  }, [tooltipDisplay])
+  const [tooltipOpen, setTooltipOpen] = useState<boolean>(false)
+  const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
 
   const onDropdownClick: MenuProps['onClick'] = ({ key }) => {
     setTheme(key as typeof theme)
@@ -37,8 +34,23 @@ export const ChangeTheme = () => {
 
   const handleOpenChange: DropdownProps['onOpenChange'] = (nextOpen, info) => {
     if (info.source === 'trigger' || nextOpen) {
-      setTooltipDisplay(nextOpen)
+      setTooltipOpen(false)
+      setPopoverOpen(nextOpen)
     }
+  }
+
+  const onButtonMouseEnter = () => {
+    if (!popoverOpen) {
+      setTimeout(() => {
+        setTooltipOpen(true)
+      }, 100)
+    }
+  }
+
+  const onButtonMouseLeave = () => {
+    setTimeout(() => {
+      setTooltipOpen(false)
+    }, 100)
   }
 
   const ReaderIcon = () => {
@@ -53,6 +65,7 @@ export const ChangeTheme = () => {
     <Dropdown
       trigger={['click']}
       onOpenChange={handleOpenChange}
+      open={popoverOpen}
       menu={{ items: themeItems, onClick: onDropdownClick }}
       placement="top"
       arrow
@@ -60,11 +73,14 @@ export const ChangeTheme = () => {
       <ComButton
         type="text"
         tooltip={{
-          title: tooltipTitle,
-          placement: 'top'
+          title: '主题',
+          placement: 'top',
+          open: tooltipOpen
         }}
         size="large"
         shape="circle"
+        onMouseEnter={onButtonMouseEnter}
+        onMouseLeave={onButtonMouseLeave}
       >
         <ReaderIcon />
       </ComButton>
