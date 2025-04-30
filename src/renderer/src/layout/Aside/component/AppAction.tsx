@@ -18,6 +18,7 @@ const AppAction: React.FC<any> = () => {
           title: '设置',
           placement: 'top'
         }}
+        onClick={() => navigate('setting')}
       >
         <PhGear className="size-5" />
       </ComButton>

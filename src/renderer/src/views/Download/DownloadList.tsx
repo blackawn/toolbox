@@ -11,46 +11,16 @@ interface DownloadItem extends Pick<ProgressProps, 'status' | 'percent'> {
 }
 
 const downloadData:DownloadItem[] = [
-  {
-    id: 1,
-    type: 'video',
-    fileName: '2025-4-18_19-05.mp4',
-    url: 'https://pull-hls-l13-admin.douyincdn.com/third/stream-117072359751942931/index.m3u8?end=1744517100&expire=1746083545&sign=c5854853777fb3f5f17eb9ba1a5e334d&start=1744516980&caller=webcast.platform_following.core&session_id=20250416151225F68218934EC2ACA9D5B5?vcodec=bytevc1',
-    createTime: '2025-4-18 19:05:32',
-    status: 'active',
-    speed: '7.6M/s',
-    percent: 50
-  },
-  {
-    id: 2,
-    type: 'video',
-    fileName: '2025-4-18_19-05.mp4',
-    url: 'https://pull-hls-l13-admin.douyincdn.com/third/stream-117072359751942931/index.m3u8?end=1744517100&expire=1746083545&sign=c5854853777fb3f5f17eb9ba1a5e334d&start=1744516980&caller=webcast.platform_following.core&session_id=20250416151225F68218934EC2ACA9D5B5?vcodec=bytevc1',
-    createTime: '2025-4-18 19:05:32',
-    status: 'success',
-    speed: '7.6M/s',
-    percent: 80
-  },
-  {
-    id: 3,
-    type: 'video',
-    fileName: '2025-4-18_19-05.mp4',
-    url: 'https://pull-hls-l13-admin.douyincdn.com/third/stream-117072359751942931/index.m3u8?end=1744517100&expire=1746083545&sign=c5854853777fb3f5f17eb9ba1a5e334d&start=1744516980&caller=webcast.platform_following.core&session_id=20250416151225F68218934EC2ACA9D5B5?vcodec=bytevc1',
-    createTime: '2025-4-18 19:05:32',
-    status: 'normal',
-    speed: '7.6M/s',
-    percent: 80
-  },
-  {
-    id: 4,
-    type: 'video',
-    fileName: '2025-4-18_19-05.mp4',
-    url: 'https://pull-hls-l13-admin.douyincdn.com/third/stream-117072359751942931/index.m3u8?end=1744517100&expire=1746083545&sign=c5854853777fb3f5f17eb9ba1a5e334d&start=1744516980&caller=webcast.platform_following.core&session_id=20250416151225F68218934EC2ACA9D5B5?vcodec=bytevc1',
-    createTime: '2025-4-18 19:05:32',
-    status: 'exception',
-    speed: '7.6M/s',
-    percent: 10
-  }
+  // {
+  //   id: 1,
+  //   type: 'video',
+  //   fileName: '2025-4-18_19-05.mp4',
+  //   url: 'https://pull-hls-l13-admin.douyincdn.com/third/stream-117072359751942931/index.m3u8?end=1744517100&expire=1746083545&sign=c5854853777fb3f5f17eb9ba1a5e334d&start=1744516980&caller=webcast.platform_following.core&session_id=20250416151225F68218934EC2ACA9D5B5?vcodec=bytevc1',
+  //   createTime: '2025-4-18 19:05:32',
+  //   status: 'active',
+  //   speed: '7.6M/s',
+  //   percent: 50
+  // },
 ] as const
 
 export const DownloadList: React.FC = () => {

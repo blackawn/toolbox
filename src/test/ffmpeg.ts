@@ -26,7 +26,7 @@ function getVideoDuration(inputUrl: string) {
   .on('stderr', line => {
     console.log('[ffmpeg stderr]', line);
   })
-  .on('error', (err, stdout, stderr) => {
+  .on('error', (err) => {
     console.error('FFmpeg error:', err.message);
   })
   .on('end', () => {

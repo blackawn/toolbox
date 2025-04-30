@@ -1,0 +1,12 @@
+{
+  "aria2": {
+    "dir": "C:\\Users\\WindowsOS\\Downloads",
+    "rpc": {
+      "listenPort": 6800
+    },
+    "save-session": "F:\\aria2-log\\aria3.session",
+    "input-file": "F:\\aria2-log\\aria3.session",
+    "console-log-level": "debug",
+    "save-session-interval": 10
+  }
+}

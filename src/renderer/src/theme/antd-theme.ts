@@ -65,6 +65,9 @@ export const darkThemeConfig = (primary?: string): ThemeConfig => {
       Tabs: {
         horizontalItemPadding: '0px 0px 8px'
       },
+      Radio: {
+        buttonBg: tw.neutral[600]
+      }
     }
   }
 }

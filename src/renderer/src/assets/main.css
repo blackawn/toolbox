@@ -43,9 +43,7 @@
 }
 
 @layer antd {
-  .tabs-download .ant-tabs-extra-content{
-    @apply self-start
-  }
+
 }
 
 

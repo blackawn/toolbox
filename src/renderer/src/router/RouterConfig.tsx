@@ -4,6 +4,7 @@ import { PhVideo } from '@renderer/components/icon'
 import Signin from '@renderer/views/Signin'
 import VideoUrl from '@renderer/views/VideoUrl'
 import VideoConverter from '@renderer/views/VideoConverter'
+import Setting from '@renderer/views/Setting'
 import Download from '@renderer/views/Download'
 
 const menuList = [
@@ -24,6 +25,10 @@ const menuList = [
     }
   },
   {
+    path: 'setting',
+    element: <Setting />
+  },
+  {
     path: 'download',
     element: <Download />
   }
@@ -32,7 +37,7 @@ const menuList = [
 const config: RouteObject[] = [
   {
     path: '/',
-    element: <Navigate to="/download" />
+    element: <Navigate to="/setting" />
   },
   {
     path: '/',

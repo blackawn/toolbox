@@ -1,4 +1,4 @@
-import { useMemo, useState, memo } from 'react'
+import { useMemo, useState } from 'react'
 import { Spot } from '@renderer/components/VideoPlayer'
 import { Modal, Table, Tag } from 'antd'
 import type { ModalProps, TableProps, TableColumnsType } from 'antd'

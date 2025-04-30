@@ -32,14 +32,14 @@ dayjs.extend(duration)
 
 const UrlList: React.FC<UrlListProps> = ({ ref, onChangeRequestDetails }) => {
   const [requestDetails, setRequestDetails] = useState<RequestDetail[]>([
-    {
-      url: 'https://pull-hls-l13-admin.douyincdn.com/third/stream-117072359751942931/index.m3u8?end=1744517100&expire=1746083545&sign=c5854853777fb3f5f17eb9ba1a5e334d&start=1744516980&caller=webcast.platform_following.core&session_id=20250416151225F68218934EC2ACA9D5B5?vcodec=bytevc1',
-      id: 3535,
-      method: 'GET',
-      resourceType: 'xhr',
-      timestamp: 1744787666068.208,
-      statusCode: 200
-    }
+    // {
+    //   url: 'https://pull-hls-l13-admin.douyincdn.com/third/stream-117072359751942931/index.m3u8?end=1744517100&expire=1746083545&sign=c5854853777fb3f5f17eb9ba1a5e334d&start=1744516980&caller=webcast.platform_following.core&session_id=20250416151225F68218934EC2ACA9D5B5?vcodec=bytevc1',
+    //   id: 3535,
+    //   method: 'GET',
+    //   resourceType: 'xhr',
+    //   timestamp: 1744787666068.208,
+    //   statusCode: 200
+    // }
     // {
     //   url: 'https://pull-hls-l13-admin.douyincdn.com/third/stream-117072359751942931/index.m3u8?end=1744515960&expire=1746083545&sign=c5854853777fb3f5f17eb9ba1a5e334d&start=1744515780&caller=webcast.platform_following.core&session_id=2025041615122564FDC384D8600D9A46F2?vcodec=bytevc1',
     //   id: 342130,
@@ -173,7 +173,7 @@ const UrlList: React.FC<UrlListProps> = ({ ref, onChangeRequestDetails }) => {
                       <Tag color="volcano">{item.vtype || 'unkown'}</Tag>
                     </div>
                     <div className="flex gap-x-1">
-                      {item.spot?.length && (
+                      {!!item.spot?.length && (
                         <ComButton
                           tooltip={{
                             title: '查看切片'

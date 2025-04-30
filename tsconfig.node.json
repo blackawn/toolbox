@@ -6,6 +6,7 @@
     "src/preload/**/*",
     "src/renderer/src/env.d.ts",
     "src/renderer/src/types.d.ts",
+    "src/typing/types.d.ts",
     "src/test/*.ts"
   ],
   "compilerOptions": {

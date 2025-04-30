@@ -12,11 +12,17 @@ const api: Window['api'] = {
   ffprobeGetVideoInfo(path) {
     return ipcRenderer.invoke('ffprobe-get-video-info', path)
   },
-  storeGet(key) {
+  storeGet(key: string) {
     return ipcRenderer.invoke('store-get', key)
   },
-  storeSet(key, value) {
+  storeSet(key: string, value: any) {
     return ipcRenderer.invoke('store-set', key, value)
+  },
+  aria2State(state) {
+    return ipcRenderer.invoke('aria2-state', state)
+  },
+  aria2Client() {
+    return ipcRenderer.invoke('aria2-client')
   }
 }
 

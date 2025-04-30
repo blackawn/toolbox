@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron'
 import { store } from '../store'
 
-export type Key = 'downloadPath'
+export type Key = keyof (typeof store)['store']
 
 export function storeModule() {
   ipcMain.handle('store-get', (_, key: Key) => {

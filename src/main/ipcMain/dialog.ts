@@ -2,7 +2,7 @@ import { app, dialog, ipcMain } from 'electron'
 import { store } from '../store'
 
 export function dialogModule() {
-  // 处理选择下载路径
+
   ipcMain.handle('dialog-select-path', async () => {
     const result = await dialog.showOpenDialog({
       properties: ['openDirectory'],
@@ -11,7 +11,7 @@ export function dialogModule() {
     })
 
     if (!result.canceled) {
-      store.set('downloadPath', result.filePaths[0])
+      store.set('aria2.dir', result.filePaths[0])
     }
 
     return result

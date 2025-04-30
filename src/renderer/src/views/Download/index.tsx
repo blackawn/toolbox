@@ -1,7 +1,25 @@
-import { ComEllipsis } from '@renderer/components/com/ComEllipsis'
+// import { ComEllipsis } from '@renderer/components/com/ComEllipsis'
 import { Button, Tabs, TabsProps } from 'antd'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { DownloadList } from './DownloadList'
+
+const Downloading = () => {
+  function getVersion() {
+    window.electron.ipcRenderer.send('aria2-get-version')
+  }
+
+  useEffect(() => {
+    window.electron.ipcRenderer.on('aria2-get-version-reply', (_, data) => {
+      console.log(data)
+    })
+  }, [])
+
+  return (
+    <div>
+      <Button onClick={getVersion}>get version</Button>
+    </div>
+  )
+}
 
 const items: TabsProps['items'] = [
   {
@@ -12,7 +30,7 @@ const items: TabsProps['items'] = [
   {
     key: 'downloading',
     label: '下载中',
-    children: <DownloadList />
+    children: <Downloading />
   },
   {
     key: 'completed',
@@ -21,55 +39,12 @@ const items: TabsProps['items'] = [
   }
 ]
 
-const DownloadPath: React.FC<any> = () => {
-  const [downloadPath, setDownloadPath] = useState('')
-
-  async function getDownloadPath() {
-    const path = await window.api.storeGet('downloadPath')
-    setDownloadPath(path)
-  }
-
-  const handleChangeDownloadPathClick = async () => {
-    const result = await window.api.dialogSelectPath()
-    if (!result.canceled) {
-      getDownloadPath()
-    }
-  }
-
-  useEffect(() => {
-    getDownloadPath()
-  }, [])
-
-  return (
-    <div className="flex items-center gap-x-1">
-      <ComEllipsis
-        style={{
-          maxWidth: '300px'
-        }}
-      >
-        {downloadPath}
-      </ComEllipsis>
-      <Button type="primary" size="small" onClick={handleChangeDownloadPathClick}>
-        修改路径
-      </Button>
-    </div>
-  )
-}
-
 const Download: React.FC<any> = () => {
   const onChange = () => {}
 
   return (
     <div>
-      <Tabs
-        defaultActiveKey="all"
-        items={items}
-        onChange={onChange}
-        className="tabs-download"
-        tabBarExtraContent={{
-          right: <DownloadPath />
-        }}
-      />
+      <Tabs defaultActiveKey="all" items={items} onChange={onChange} />
     </div>
   )
 }

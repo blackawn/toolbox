@@ -25,6 +25,7 @@
     "@electron-toolkit/utils": "^4.0.0",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@ffprobe-installer/ffprobe": "^2.1.2",
+    "@naria2/node": "^0.1.2",
     "electron-updater": "^6.3.9"
   },
   "devDependencies": {
@@ -47,6 +48,7 @@
     "electron": "^35.0.3",
     "electron-builder": "^25.1.8",
     "electron-store": "^10.0.1",
+    "electron-util": "^0.18.1",
     "electron-vite": "^3.1.0",
     "eslint": "^9.23.0",
     "eslint-plugin-react": "^7.37.4",
@@ -56,6 +58,8 @@
     "framer-motion": "^12.6.3",
     "got": "^14.4.7",
     "m3u8-parser": "^7.2.0",
+    "maria2": "^0.4.0",
+    "naria2": "^0.1.2",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "react": "^19.1.0",
