@@ -59,6 +59,7 @@
     "got": "^14.4.7",
     "m3u8-parser": "^7.2.0",
     "maria2": "^0.4.0",
+    "nanoid": "^5.1.5",
     "naria2": "^0.1.2",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",

@@ -1,7 +1,7 @@
 import { createClient } from 'naria2'
 import type { Aria2Client } from 'naria2'
 import { createChildProcess, getNaria2Binary } from '@naria2/node'
-import { aria2, system } from 'maria2'
+import { aria2 } from 'maria2'
 import { ipcMain } from 'electron'
 import { isDev } from 'electron-util/main'
 import { store } from '../store'
@@ -18,8 +18,8 @@ async function startAria2() {
       spawn: {
         binary: isDev
           ? getNaria2Binary()
-          : getNaria2Binary().replace('app.asar', 'app.asar.unpacked')
-      }
+          : getNaria2Binary().replace('app.asar', 'app.asar.unpacked'),
+      },
     })
   )
 }
@@ -39,7 +39,7 @@ function errorReturn(channel: string, message: any) {
 }
 
 export function aria2Module() {
-  startAria2()
+ // startAria2()
 
   ipcMain.handle('aria2-state', async (_, state) => {
     if (state) {

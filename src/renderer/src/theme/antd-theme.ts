@@ -34,7 +34,8 @@ export const lightThemeConfig = (primary?: string): ThemeConfig => {
         colorTextLightSolid: tw.neutral[700]
       },
       Tabs: {
-        horizontalItemPadding: '0px 0px 8px'
+        horizontalItemPadding: '0px 0px 8px',
+        colorBorderSecondary: tw.neutral[200]
       }
     }
   }
@@ -63,7 +64,8 @@ export const darkThemeConfig = (primary?: string): ThemeConfig => {
         colorBgElevated: tw.neutral[700]
       },
       Tabs: {
-        horizontalItemPadding: '0px 0px 8px'
+        horizontalItemPadding: '0px 0px 8px',
+        colorBorderSecondary: tw.neutral[700]
       },
       Radio: {
         buttonBg: tw.neutral[600]

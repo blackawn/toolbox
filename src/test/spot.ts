@@ -63,6 +63,7 @@ class ObjectPool {
 
     this.counts[colorIdx]--
     this.pool.splice(index, 1)
+
     return true
   }
 

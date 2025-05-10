@@ -34,6 +34,7 @@ async function parseM3U8() {
     console.log(basePath)
 
     const urls = segments.map((seg) => {
+      const a = seg
       return seg.uri.startsWith('http') ? seg.uri : basePath + seg.uri
     })
 
